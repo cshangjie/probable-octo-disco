@@ -42,7 +42,7 @@ class _FlutterTabAppState extends State<FlutterTabApp> {
               label: 'Log',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.alarm),
+              icon: Icon(Icons.fitness_center),
               label: 'Routines',
             ),
             BottomNavigationBarItem(

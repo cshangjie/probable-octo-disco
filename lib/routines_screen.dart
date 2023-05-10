@@ -21,7 +21,6 @@ class _RoutinesScreenState extends State<RoutinesScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text('Routines'),
         leading: TextButton(
           onPressed: () {
             // TODO: Implement edit button behavior
@@ -60,8 +59,16 @@ class _RoutinesScreenState extends State<RoutinesScreen> {
               children: [
                 // A SlidableAction can have an icon and/or a label.
                 SlidableAction(
-                  onPressed: (context) => {
-                    // TODO onclick delete respective routine
+                  onPressed: (context) {
+                    setState(() {
+                      routines.removeAt(index);
+                    });
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Routine deleted'),
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
                   },
                   backgroundColor: Colors.red,
                   foregroundColor: Colors.white,
