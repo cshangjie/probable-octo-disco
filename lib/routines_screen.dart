@@ -43,17 +43,21 @@ class _RoutinesScreenState extends State<RoutinesScreen> {
           ),
         ],
       ),
-      body: ListView.builder(
+      body: ListView.separated(
         itemCount: routines.length,
+        separatorBuilder: (context, index) {
+          return Divider(
+            thickness: 1,
+            height: 1,
+          );
+        },
         itemBuilder: (context, index) {
           return Slidable(
             key: Key(routines[index]),
             endActionPane: ActionPane(
               // A motion is a widget used to control how the pane animates.
               motion: const BehindMotion(),
-
-              // A pane can dismiss the Slidable.
-              dismissible: DismissiblePane(onDismissed: () {}),
+              extentRatio: .25,
 
               // All actions are defined in the children parameter.
               children: [
@@ -78,7 +82,14 @@ class _RoutinesScreenState extends State<RoutinesScreen> {
               ],
             ),
             child: ListTile(
-              title: Text(routines[index]),
+              title: Row(
+                children: [
+                  Expanded(
+                    child: Text(routines[index]),
+                  ),
+                  Icon(Icons.chevron_right),
+                ],
+              ),
               onTap: () {
                 // TODO: Navigate to routine-specific page
               },
