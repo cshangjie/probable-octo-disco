@@ -1,20 +1,64 @@
 import 'package:flutter/material.dart';
+import 'log_screen.dart';
+import 'routines_screen.dart';
+import 'statistics_screen.dart';
+import 'profile_screen.dart';
 
-import 'src/app.dart';
-import 'src/settings/settings_controller.dart';
-import 'src/settings/settings_service.dart';
+void main() {
+  runApp(FlutterTabApp());
+}
 
-void main() async {
-  // Set up the SettingsController, which will glue user settings to multiple
-  // Flutter Widgets.
-  final settingsController = SettingsController(SettingsService());
+class FlutterTabApp extends StatefulWidget {
+  @override
+  _FlutterTabAppState createState() => _FlutterTabAppState();
+}
 
-  // Load the user's preferred theme while the splash screen is displayed.
-  // This prevents a sudden theme change when the app is first displayed.
-  await settingsController.loadSettings();
+class _FlutterTabAppState extends State<FlutterTabApp> {
+  int _currentIndex = 0;
 
-  // Run the app and pass in the SettingsController. The app listens to the
-  // SettingsController for changes, then passes it further down to the
-  // SettingsView.
-  runApp(MyApp(settingsController: settingsController));
+  final List<Widget> _screens = [
+    LogScreen(),
+    RoutinesScreen(),
+    StatisticsScreen(),
+    ProfileScreen(),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: _screens[_currentIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.list),
+              label: 'Log',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.alarm),
+              label: 'Routines',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.bar_chart),
+              label: 'Statistics',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Profile',
+            ),
+          ],
+          selectedItemColor: Colors.blue, // Change the selected icon color
+          unselectedItemColor: Colors.grey, // Change the unselected icon color
+          backgroundColor: Colors.white, // Change the background color
+        ),
+      ),
+    );
+  }
 }
